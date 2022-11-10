@@ -1,0 +1,385 @@
+/** Base **/
+html,
+body {
+  margin: 20px 100px;
+  padding: 0;
+}
+
+/** Contenu **/
+* {
+  font-family: "Lato", sans-serif;
+}
+
+/** Header **/
+/* Logo */
+.logo {
+  display: block;
+  margin: auto;
+}
+
+/** Formulaire **/
+/* Rechercher */
+#rechercher {
+  margin: 20px 0;
+  position: relative;
+}
+#barre-recherche {
+  background-color: #e7e7e7;
+  border-color: transparent;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: 20px;
+  height: 65px;
+  padding: 25px 20px;
+  width: 100%;
+}
+#barre-recherche:placeholder-shown {
+  text-overflow: ellipsis;
+}
+#barre-recherche::-webkit-search-cancel-button {
+  display: none;
+}
+.fa-search {
+  cursor: pointer;
+  font-size: 32px;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/** Filtres **/
+#filtre {
+  display: flex;
+  margin: 20px 0;
+}
+/* Type de filtre */
+.type-filtre {
+  border-radius: 5px;
+  display: flex;
+  width: fit-content;
+}
+/* Boutons */
+.btn-filtre {
+  border-color: transparent;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 20px;
+  height: 65px;
+  margin-right: 20px;
+  padding: 0 10px;
+  position: relative;
+  text-align: left;
+  width: 200px;
+}
+.btn-filtre:hover {
+  cursor: pointer;
+}
+/* Chevron */
+.chevron-filtre {
+  color: #ffffff;
+  font-size: 18px;
+  margin-left: 5px;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.chevron-filtre:hover {
+  cursor: pointer;
+}
+/* Cherche dans les filtres */
+.cherche-filtre {
+  border-radius: 5px;
+  display: none;
+  flex-direction: column;
+  margin-right: 20px;
+  padding: 0 10px;
+  width: 100%;
+}
+.cherche-filtre > form {
+  position: relative;
+}
+/* Champs des filtres */
+.champ-filtre {
+  border-color: transparent;
+  border-radius: 5px;
+  box-sizing: border-box;
+  height: 65px;
+  width: 100%;
+}
+.champ-filtre::placeholder {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
+}
+/* Liste des filtres */
+.liste-filtre {
+  columns: 3;
+  height: fit-content;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 15px 0;
+}
+.nom-filtre {
+  color: #ffffff;
+}
+.nom-filtre:hover {
+  cursor: pointer;
+}
+/* Ingrédients */
+#btn-ingredients,
+#cherche-ingredients,
+#champ-ingredients {
+  background-color: #3282f7;
+}
+/* Appareils */
+#btn-appareils,
+#cherche-appareils,
+#champ-appareils {
+  background-color: #68d9a4;
+}
+/* Ustensiles */
+#btn-ustensiles,
+#cherche-ustensiles,
+#champ-ustensiles {
+  background-color: #ed6454;
+  margin-right: unset;
+}
+
+/** Plats **/
+/* Liste des plats */
+#recettes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+.plat {
+  background-color: #e7e7e7;
+  border-radius: 0 0 5px 5px;
+  flex: 1 0 calc((100% - 100px) / 3);
+}
+/* Image plat */
+.image-plat {
+  background-color: #c7bebe;
+  border-radius: 5px 5px 0 0;
+  height: 200px;
+}
+/* Description du plat */
+.description-plat {
+  background-color: #e7e7e7;
+  border-radius: 0 0 5px 5px;
+  padding: 20px;
+}
+/* Titre du plat */
+.titre-plat {
+  display: inline;
+  font-size: 20px;
+  margin: auto;
+}
+/* Temps de préparation */
+.temps-preparation {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+}
+.temps-preparation::before {
+  content: "\f017";
+  font-family: "Font Awesome\ 5 Free";
+  font-size: 20px;
+  font-weight: lighter;
+  margin-right: 5px;
+}
+.temps-preparation::after {
+  content: " min";
+}
+/* Liste d'ingrédient */
+.liste-ingredient {
+  float: left;
+  margin: 20px 10px 0 0;
+}
+/* Type d'ingrédient */
+.type-ingredient {
+  display: block;
+  font-weight: bold;
+}
+/* Quantité d'ingrédient */
+.nombre-ingredient {
+  font-weight: normal;
+}
+.nombre-ingredient::before {
+  content: " : ";
+}
+/* Recette */
+.recette > p {
+  display: flex;
+  margin: 20px 0 0 0;
+  text-align: justify;
+  text-overflow: ellipsis;
+}
+
+/** Responsive **/
+/* 1600 */
+@media screen and (max-width: 1600px) {
+  /** Base **/
+  html,
+  body {
+    margin: 20px 50px;
+  }
+  /** Plats **/
+  /* Liste d'ingrédient */
+  .liste-ingredient {
+    float: unset;
+  }
+  /* Titre du plat */
+  .titre-plat {
+    font-size: 18px;
+  }
+  /* Temps de préparation */
+  .temps-preparation {
+    font-size: 16px;
+  }
+  .temps-preparation::before {
+    font-size: 15px;
+  }
+}
+/* 1400 */
+@media screen and (max-width: 1400px) {
+  /** Base **/
+  html,
+  body {
+    margin: 20px 25px;
+  }
+  /** Plats **/
+  /* Titre du plat */
+  .titre-plat {
+    font-size: 16px;
+  }
+  /* Temps de préparation */
+  .temps-preparation {
+    font-size: 15px;
+  }
+  .temps-preparation::before {
+    font-size: 14px;
+  }
+  /* Type d'ingrédient */
+  .type-ingredient {
+    font-size: 14px;
+  }
+  /* Recette */
+  .recette > p {
+    font-size: 14px;
+  }
+}
+/* 1250 */
+@media screen and (max-width: 1250px) {
+  /** Base **/
+  html,
+  body {
+    margin: 20px 10px;
+  }
+  /** Plats **/
+  /* Liste des plats */
+  #recettes {
+    gap: 25px;
+  }
+  .plat {
+    flex: 1 0 calc((100% - 100px) / 2);
+  }
+  /* Titre du plat */
+  .titre-plat {
+    font-size: 20px;
+  }
+  /* Temps de préparation */
+  .temps-preparation {
+    font-size: 18px;
+  }
+  .temps-preparation::before {
+    font-size: 17px;
+  }
+  /* Type d'ingrédient */
+  .type-ingredient {
+    font-size: 16px;
+  }
+  /* Recette */
+  .recette > p {
+    font-size: 16px;
+  }
+}
+/* 992 */
+@media screen and (max-width: 992px) {
+  /** Filtres **/
+  #filtre {
+    justify-content: center;
+  }
+  /* Cherche dans les filtres */
+  .cherche-filtre {
+    margin-right: 0;
+    width: auto;
+  }
+  /** Plats **/
+  /* Liste des plats */
+  #recettes {
+    gap: 25px 0;
+  }
+  .plat {
+    flex: 1 0 calc((100% - 100px) / 1);
+  }
+}
+/* 850 */
+@media screen and (max-width: 850px) {
+  /** Formulaire **/
+  /* Rechercher */
+  #barre-recherche {
+    font-size: 16px;
+  }
+  /** Filtres **/
+  #filtre {
+    flex-direction: column;
+  }
+  /* Type de filtre */
+  .type-filtre {
+    display: block;
+    margin: 10px auto;
+    width: fit-content;
+  }
+  /* Boutons */
+  .btn-filtre {
+    margin-right: unset;
+  }
+}
+/* 600 */
+@media screen and (max-width: 600px) {
+  /** Header **/
+  /* Logo */
+  .logo {
+    width: 268px;
+  }
+  /** Formulaire **/
+  /* Rechercher */
+  #barre-recherche {
+    font-size: 14px;
+  }
+  #barre-recherche::-webkit-search-cancel-button {
+    display: block;
+  }
+  .fa-search {
+    display: none;
+  }
+}
+/* 425 */
+@media screen and (max-width: 425px) {
+  /** Base **/
+  html,
+  body {
+    margin: 20px 5px;
+  }
+  /** Plats **/
+  /* Temps de préparation */
+  .temps-preparation {
+    display: block;
+    float: unset;
+    margin-top: 5px;
+  }
+}
