@@ -1,4 +1,6 @@
 /***********  Algo boucles native  ***************/
+
+
 async function listeRecette() {
     const listeJS = await fetch("recipes.js") /*Promesse Récupération de données à partir d’un fichier JS*/
     const listeGlobale = await listeJS.js();
@@ -37,9 +39,9 @@ function construitRecette(id, nom, personne, temps, ingredients, description, ap
     recette.setAttribute("id", `${id}`);
     recette.setAttribute("data-nom", `${nom}`);
     recette.classList.add("recette");
-    ingredients.forEach(ingredient => recette.classList.add(normalizer("ingredients-"+kebabCase(ingredient.ingredient))));
-    recette.classList.add("appliance-"+normalizer(kebabCase(`${appliance}`)))
-    ustensils.forEach(ustensil => recette.classList.add(normalizer("ustensils-"+kebabCase(ustensil))));
+    ingredients.forEach(ingredient => recette.classList.add(("ingredients-"+(ingredient.ingredient))));
+    recette.classList.add("appliance-"(kebabCase(`${appliance}`)))
+    ustensils.forEach(ustensil => recette.classList.add(("ustensils-"+(ustensil))));
     /* Créer le template */
     let recetteTemplate = `
         <div class="image-recette"></div>
@@ -60,3 +62,45 @@ function construitRecette(id, nom, personne, temps, ingredients, description, ap
     listeRecettes.appendChild(recette);
 }
 
+/** Liste des recettes **/
+let recettes = document.querySelectorAll(".recette");
+
+
+/*** Gère les filtres ***/
+/** Ajoute chaque élément dans la liste des filtres **/
+function listeFiltres(type) {
+    let liste = [];
+    /* Ajoute dans un tableau les données selon le type */
+    recipes.forEach(recipe => {
+        switch(type) {
+            case "ingredients":
+                `${recipe.ingredients.map(data => 
+                    liste.push((
+                        `${data.ingredient}`
+                    ))
+                ).join("")}`;
+                break;
+            case "appliance":
+                liste.push((
+                    `${recipe.appliance}`
+                ));
+                break;
+            case "ustensils":
+                `${recipe.ustensils.map(data => 
+                    liste.push((
+                        `${data}`
+                    ))
+                ).join("")}`;
+                break;
+            default:
+                break;
+        }
+    });
+    /* Tri par ordre alphabétique */
+    liste = liste.sort((a, b) => a.localeCompare(b));
+    /* Insert en éliminant les doublons dans le DOM */
+    new Set(liste).forEach((data) => {
+        nom = ((data));
+        document.getElementById("liste-filtre-"+type).insertAdjacentHTML("beforeend", `<li class="nom-filtre" id="${type}-${nom}" data-type="${type}" data-nom="${data}" onclick="ajouteFiltre('${type}', '${nom}')">${data}</li>`);
+    });
+}
