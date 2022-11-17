@@ -1,35 +1,24 @@
 /***********  Algo boucles native  ***************/
+import recipes from "./recipes.js" 
 
+displayData(recipes);
 
-async function listeRecette() {
-    const listeJS = await fetch("recipes.js") /*Promesse Récupération de données à partir d’un fichier JS*/
-    const listeGlobale = await listeJS.js();
-    return listeGlobale;
+function displayData (recipes) {
+    recipes.forEach(recipe => { 
+        let idRecette = recipe["id"];
+        let nomRecette = recipe["name"];
+        let personneRecette = recipe["servings"];
+        let tempsRecette = recipe["time"];
+        let ingredientsRecette = recipe["ingredients"];
+        let descriptionRecette = recipe["description"];
+        let appareilsRecette = recipe["appliance"];
+        let ustensilesRecette = recipe["ustensils"];
+        construitRecette(idRecette, nomRecette, personneRecette, tempsRecette, ingredientsRecette, descriptionRecette, appareilsRecette, ustensilesRecette);
+    });  
 }
-
-async function init() {
-    // Récupère les datas 
-    const {
-        recipes
-    } = await listeRecette();
-    displayData(recipes);
-};
-
-init();
-
-
 /*** Gère les recettes ***/
 /** Récupère les données des recettes **/
-recipes.forEach(recipe => { let idRecette = recipe["id"];
-    let nomRecette = recipe["name"];
-    let personneRecette = recipe["servings"];
-    let tempsRecette = recipe["time"];
-    let ingredientsRecette = recipe["ingredients"];
-    let descriptionRecette = recipe["description"];
-    let appareilsRecette = recipe["appliance"];
-    let ustensilesRecette = recipe["ustensils"];
-    return construitRecette(idRecette, nomRecette, personneRecette, tempsRecette, ingredientsRecette, descriptionRecette, appareilsRecette, ustensilesRecette);
-});
+
 
 /** Construit les recettes **/
 function construitRecette(id, nom, personne, temps, ingredients, description, appliance, ustensils) {
@@ -39,8 +28,8 @@ function construitRecette(id, nom, personne, temps, ingredients, description, ap
     recette.setAttribute("id", `${id}`);
     recette.setAttribute("data-nom", `${nom}`);
     recette.classList.add("recette");
-    ingredients.forEach(ingredient => recette.classList.add(("ingredients-"+(ingredient.ingredient))));
-    recette.classList.add("appliance-"(kebabCase(`${appliance}`)))
+    ingredients.forEach(ingredient => recette.classList.add(("ingredients-"+(ingredient))));
+    recette.classList.add("appliance-"((`${appliance}`)))
     ustensils.forEach(ustensil => recette.classList.add(("ustensils-"+(ustensil))));
     /* Créer le template */
     let recetteTemplate = `
@@ -50,7 +39,7 @@ function construitRecette(id, nom, personne, temps, ingredients, description, ap
             <span class="temps-preparation">${temps}</span>
             <div class="liste-ingredient">
                 ${ingredients.map(ingredient =>
-                    `<span class="type-ingredient">${ingredient.ingredient}<span class="nombre-ingredient">${ingredient.quantity || ''}${ingredient.quantite || ''} ${ingredient.unit || ''}</span></span>`
+                    `<span class="type-ingredient">${ingredient}<span class="nombre-ingredient">${ingredient.quantity || ''}${ingredient.quantite || ''} ${ingredient.unit || ''}</span></span>`
                 ).join(" ")}
             </div>
             <div class="description-recette">
