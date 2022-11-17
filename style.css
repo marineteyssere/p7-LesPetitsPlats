@@ -383,3 +383,80 @@ body {
     margin-top: 5px;
   }
 }
+
+/* Algo 1 boucle native */
+
+/* Image recette */
+.image-recette {
+  background-color: #c7bebe;
+  background-image: url("../img/Logo.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 5px 5px 0 0;
+  height: 200px;
+}
+/* Contenu de la recette */
+.contenu-recette {
+  background-color: #e7e7e7;
+  border-radius: 0 0 5px 5px;
+  padding: 20px;
+}
+/* Titre du recette */
+.titre-recette {
+  display: inline-block;
+  font-size: 20px;
+  margin: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: calc(100% - 40px - 25%);
+}
+/* Temps de préparation */
+.temps-preparation {
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  width: 25%;
+}
+.temps-preparation::before {
+  content: "\f017";
+  font-family: "Font Awesome\ 5 Free";
+  font-size: 20px;
+  font-weight: lighter;
+  margin-right: 5px;
+}
+.temps-preparation::after {
+  content: " min";
+}
+/* Liste d'ingrédient */
+.liste-ingredient {
+  float: left;
+  margin: 20px 10px 0 0;
+  width: calc(50% - 10px);
+}
+.type-ingredient {
+  display: block;
+  font-weight: bold;
+}
+.nombre-ingredient {
+  font-weight: normal;
+}
+.nombre-ingredient::before {
+  content: " : ";
+}
+/* Description de la recette */
+.description-recette {
+  float: right;
+  width: 50%;
+}
+.description-recette > p {
+  display: -webkit-box;
+  margin: 20px 0 0 0;
+  overflow: hidden;
+  text-align: justify;
+  text-overflow: ellipsis;
+  width: 100%;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+}
