@@ -16,21 +16,25 @@ function displayData (recipes) {
         construitRecette(idRecette, nomRecette, personneRecette, tempsRecette, ingredientsRecette, descriptionRecette, appareilsRecette, ustensilesRecette);
     });  
 }
-/*** Gère les recettes ***/
-/** Récupère les données des recettes **/
+/*** Gère les espaces ***/
+function space(data) {
+    data = data.split(" ").join("-");
+    data = data.replace("'","-");
+    return data;
+}
 
 
 /** Construit les recettes **/
 function construitRecette(id, nom, personne, temps, ingredients, description, appliance, ustensils) {
     /* Récupère les recettes et créer l'élément */
-    let listeRecettes = document.getElementById("liste-recettes");
+    let listeRecettes = document.getElementById("recettes");
     let recette = document.createElement("article");
     recette.setAttribute("id", `${id}`);
     recette.setAttribute("data-nom", `${nom}`);
     recette.classList.add("recette");
-    ingredients.forEach(ingredient => recette.classList.add(("ingredients-"+(ingredient))));
-    recette.classList.add("appliance-"((`${appliance}`)))
-    ustensils.forEach(ustensil => recette.classList.add(("ustensils-"+(ustensil))));
+    ingredients.forEach(ingredient => recette.classList.add(("ingredients-"+space(ingredient.ingredient))));
+    recette.classList.add("appliance-"+space((`${appliance || "nul"}`)))
+    ustensils.forEach(ustensil => recette.classList.add(("ustensils-"+space(ustensil))));
     /* Créer le template */
     let recetteTemplate = `
         <div class="image-recette"></div>

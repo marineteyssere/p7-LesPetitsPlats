@@ -387,6 +387,117 @@ body {
 /* Algo 1 boucle native */
 
 /* Image recette */
+/* Cherche dans les filtres */
+.cherche-filtre {
+  border-radius: 5px;
+  display: none;
+  flex-direction: column;
+  margin-right: 20px;
+  min-width: 250px;
+  padding: 0 10px;
+  width: 100%;
+}
+.cherche-filtre > form {
+  position: relative;
+}
+.cherche-filtre-cacher {
+  display: none;
+}
+.cherche-filtre-afficher {
+  display: flex;
+}
+/* Champs des filtres */
+.champ-filtre {
+  border-color: transparent;
+  border-radius: 5px;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-size: 15px;
+  height: 65px;
+  width: 100%;
+}
+.champ-filtre::placeholder {
+  color: #ffffff;
+}
+/* Liste des filtres */
+.liste-filtre {
+  columns: 3;
+  height: fit-content;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 15px 0;
+}
+.nom-filtre {
+  color: #ffffff;
+}
+.nom-filtre:hover {
+  cursor: pointer;
+}
+.nom-filtre:first-letter {
+  text-transform: capitalize;
+}
+.nom-filtre-afficher {
+  display: block;
+}
+.nom-filtre-cacher {
+  display: none;
+}
+.nom-filtre-cacher-choisis {
+  display: none !important;
+}
+/* Ingrédients */
+#btn-ingredients,
+#cherche-ingredients,
+#champ-ingredients,
+.filtre-ingredients {
+  background-color: #3282f7;
+}
+/* Appareils */
+#btn-appareils,
+#cherche-appareils,
+#champ-appliance,
+.filtre-appliance {
+  background-color: #68d9a4;
+}
+/* Ustensiles */
+#btn-ustensiles,
+#cherche-ustensiles,
+#champ-ustensils,
+.filtre-ustensils {
+  background-color: #ed6454;
+}
+
+/** Recettes **/
+/* Aucun résultat */
+#aucun-resultat {
+  display: none;
+  font-size: 20px;
+  text-align: center;
+  width: 100%;
+}
+.aucun-resultat-afficher {
+  display: block !important;
+}
+/* Liste des recettes */
+#liste-recettes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+}
+.recette {
+  background-color: #e7e7e7;
+  border-radius: 0 0 5px 5px;
+  flex: 1 0 calc((100% - 100px) / 3);
+  max-width: calc((100% - 100px) / 3);
+  padding-bottom: 15px;
+}
+.recette-afficher {
+  display: block;
+}
+.recette-cacher {
+  display: none;
+}
+/* Image recette */
 .image-recette {
   background-color: #c7bebe;
   background-image: url("../img/Logo.png");
