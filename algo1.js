@@ -59,7 +59,10 @@ function construitRecette(id, nom, personne, temps, ingredients, description, ap
 let recettes = document.querySelectorAll(".recette");
 
 
-/*** Gère les filtres ***/
+/*** Gère les filtres ***   FAIRE EN TABLEAU CHAQUE ARGURMENT APPLIANCE ECT
+ * RAJOUTER ARG FUNCTION LISTE FILTRE
+ * INJECTER CHAQUE TRI DANS LISTE FILTRE
+ * SUPPRIMER ARG DEJA SELECTIONNÉ /
 /** Ajoute chaque élément dans la liste des filtres **/
 function listeFiltres(type) {
     let liste = [];
@@ -97,3 +100,4 @@ function listeFiltres(type) {
         document.getElementById("liste-filtre-"+type).insertAdjacentHTML("beforeend", `<li class="nom-filtre" id="${type}-${nom}" data-type="${type}" data-nom="${data}" onclick="ajouteFiltre('${type}', '${nom}')">${data}</li>`);
     });
 }
+
