@@ -59,27 +59,69 @@ function construitRecette(id, nom, personne, temps, ingredients, description, ap
 let recettes = document.querySelectorAll(".recette");
 
 
-/*** Gère les filtres ***   FAIRE EN TABLEAU CHAQUE ARGURMENT APPLIANCE ECT
- * RAJOUTER ARG FUNCTION LISTE FILTRE
- * INJECTER CHAQUE TRI DANS LISTE FILTRE
- * SUPPRIMER ARG DEJA SELECTIONNÉ /
-/** Ajoute chaque élément dans la liste des filtres **/
-function listeFiltres(type) {
+/*** Gère les filtres ***/
+
+/*const ingredients = []
+const ustensils = []
+const appliances = []*/
+
+recipes.forEach(recipe => {
+  recipe.ingredients.forEach(ingredient => {
+    const exists =
+      ingredients.findIndex(
+        element => element.ingredient === ingredient.ingredient
+      ) > -1
+
+    if (!exists) {
+      ingredients.push(ingredient)
+    }
+  })
+
+  recipe.appliance.forEach(appliance => {
+    const exists =
+    appliance.findIndex(
+        element => element.appliance === appliance.appliance
+      ) > -1
+
+    if (!exists) {
+        appliance.push(appliance)
+    }
+  })
+
+  recipe.ustensils.forEach(ustensils => {
+    const exists =
+      ustensils.findIndex(
+        element => element.ustensils === ustensils.ustensils
+      ) > -1
+
+    if (!exists) {
+        ustensils.push(ustensils)
+    }
+  })
+})
+
+console.log(ingredients)
+console.log(appliances)
+console.log(ustensils)
+
+function listeFiltres(type, recipes) {
     let liste = [];
     /* Ajoute dans un tableau les données selon le type */
     recipes.forEach(recipe => {
         switch(type) {
-            case "ingredients":
-                `${recipe.ingredients.map(data => 
+            case "ingredient":
+                `${recipe.ingredient.map(data => 
                     liste.push((
                         `${data.ingredient}`
                     ))
                 ).join("")}`;
                 break;
             case "appliance":
-                liste.push((
-                    `${recipe.appliance}`
-                ));
+                `${recipe.appliance.map(data => 
+                    liste.push((
+                        `${data.appliance}`
+                    ))
+                ).join("")}`;
                 break;
             case "ustensils":
                 `${recipe.ustensils.map(data => 
@@ -92,12 +134,21 @@ function listeFiltres(type) {
                 break;
         }
     });
-    /* Tri par ordre alphabétique */
-    liste = liste.sort((a, b) => a.localeCompare(b));
-    /* Insert en éliminant les doublons dans le DOM */
-    new Set(liste).forEach((data) => {
-        nom = ((data));
-        document.getElementById("liste-filtre-"+type).insertAdjacentHTML("beforeend", `<li class="nom-filtre" id="${type}-${nom}" data-type="${type}" data-nom="${data}" onclick="ajouteFiltre('${type}', '${nom}')">${data}</li>`);
-    });
+    /* Supprime les doublons */
+    let filtres = [...new Set(liste)];
+    return filtres;
+    
 }
 
+let ingredients = listeFiltres("ingredient", recipes);
+let appliances = listeFiltres("appliance", recipes);
+let ustensils = listeFiltres("ustensils", recipes);
+
+
+/* Tri par ordre alphabétique 
+liste = liste.sort((a, b) => a.localeCompare(b));
+/* Insert en éliminant les doublons dans le DOM 
+new Set(liste).forEach((data) => {
+    nom = ((data));
+    document.getElementById("liste-filtre-"+type).insertAdjacentHTML("beforeend", `<li class="nom-filtre" id="${type}-${nom}" data-type="${type}" data-nom="${data}" onclick="ajouteFiltre('${type}', '${nom}')">${data}</li>`);
+});*/
