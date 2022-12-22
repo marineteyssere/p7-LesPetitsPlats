@@ -1,6 +1,12 @@
 /***********  Algo boucles native  ***************/
 import recipes from "./recipes.js" 
 
+
+let ingredients = []
+let ustensils = []
+let appliances = []
+
+
 displayData(recipes);
 
 function displayData (recipes) {
@@ -61,9 +67,7 @@ let recettes = document.querySelectorAll(".recette");
 
 /*** Gère les filtres ***/
 
-/*const ingredients = []
-const ustensils = []
-const appliances = []*/
+
 
 recipes.forEach(recipe => {
   recipe.ingredients.forEach(ingredient => {
@@ -77,6 +81,7 @@ recipes.forEach(recipe => {
     }
   })
 
+  /* appliance n'est pas un tab et ne nécessite pas de boucle */ 
   recipe.appliance.forEach(appliance => {
     const exists =
     appliance.findIndex(
@@ -140,9 +145,9 @@ function listeFiltres(type, recipes) {
     
 }
 
-let ingredients = listeFiltres("ingredient", recipes);
-let appliances = listeFiltres("appliance", recipes);
-let ustensils = listeFiltres("ustensils", recipes);
+ingredients = listeFiltres("ingredient", recipes);
+appliances = listeFiltres("appliance", recipes);
+ustensils = listeFiltres("ustensils", recipes);
 
 
 /* Tri par ordre alphabétique 

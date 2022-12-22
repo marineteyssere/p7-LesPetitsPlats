@@ -1,4 +1,4 @@
-// Gère l'ouverture / fermeture des filtres /
+// Gère l'ouverture / fermeture des filtres et rajouter addeventlistener sur btn /
 
 function ouvreFiltre(type) {
     let btnFiltres = document.querySelectorAll(".btn-filtre");
