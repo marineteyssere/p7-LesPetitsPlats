@@ -81,17 +81,24 @@ recipes.forEach(recipe => {
     }
   })
 
-  /* appliance n'est pas un tab et ne nécessite pas de boucle */ 
-  recipe.appliance.forEach(appliance => {
-    const exists =
-    appliance.findIndex(
-        element => element.appliance === appliance.appliance
-      ) > -1
+  /* appliance n'est pas un tab et ne nécessite pas de boucle, trouver autre chose que findIndex (juste appliance, pas recipe.appliance) */ 
+  const exists = appliance.findValue(
+    element => element.appliance === appliance.appliance
+  ) > -1
+  
+  if (!exists) {
+    recipe.appliance.push(appliance)
+  }
 
-    if (!exists) {
-        appliance.push(appliance)
-    }
-  })
+  const applianceIndex = recipe.appliance.findIndex(
+    element => element.appliance === appliance.appliance
+  )
+  
+  if (applianceIndex === -1) {
+    recipe.appliance.push(appliance)
+  }
+
+  /* appliance n'est pas un tab et ne nécessite pas de boucle */ 
 
   recipe.ustensils.forEach(ustensils => {
     const exists =
