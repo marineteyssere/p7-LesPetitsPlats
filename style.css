@@ -90,6 +90,7 @@ body {
   cursor: pointer;
 }
 /* Cherche dans les filtres */
+
 .cherche-filtre {
   border-radius: 5px;
   display: none;
@@ -101,6 +102,45 @@ body {
 .cherche-filtre > form {
   position: relative;
 }
+
+.cherche-filtre-ing {
+  border-radius: 5px;
+  display: none;
+  flex-direction: column;
+  margin-right: 20px;
+  padding: 0 10px;
+  width: 100%;
+}
+.cherche-filtre-ing > form {
+  position: relative;
+}
+
+.cherche-filtre-app {
+  border-radius: 5px;
+  display: none;
+  flex-direction: column;
+  margin-right: 20px;
+  padding: 0 10px;
+  width: 100%;
+}
+.cherche-filtre-app > form {
+  position: relative;
+}
+
+.cherche-filtre-ust {
+  border-radius: 5px;
+  display: none;
+  flex-direction: column;
+  margin-right: 20px;
+  padding: 0 10px;
+  width: 100%;
+}
+.cherche-filtre-ust > form {
+  position: relative;
+}
+
+
+
 /* Champs des filtres */
 .champ-filtre {
   border-color: transparent;
