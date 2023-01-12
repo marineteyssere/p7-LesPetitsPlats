@@ -1,7 +1,6 @@
 /***********  Algo boucles native  ***************/
 import recipes from "./recipes.js" 
 
-
 let ingredients = []
 let ustensils = []
 let appliances = []
@@ -53,7 +52,11 @@ function construitRecette(id, nom, temps, ingredients, description, appliance, u
   const token = `appliance-${space(applianceName)}`;
   recette.classList.add(token);
 
-  ustensils.forEach(ustensil => recette.classList.add(("ustensils-" + space(ustensil))));
+  if (ustensils instanceof Array) {
+    ustensils.forEach(ustensil => recette.classList.add(("ustensils-" + space(ustensil))));
+  } else {
+    // ustensils n'est pas un tableau, traitez-le comme tel
+  }
   /* Créer le template */
   let recetteTemplate = `
       <div class="image-recette"></div>
