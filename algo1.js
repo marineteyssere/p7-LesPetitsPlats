@@ -233,6 +233,45 @@ for (const option of options) {
   };
 }
 
+/* Evenements */
+
+barre.addEventListener("input", function() {
+  const value = barre.value.toLowerCase();
+  recettes.forEach(function(recette) {
+  if (recette.getAttribute("data-nom").toLowerCase().includes(value)) {
+  recette.style.display = "block";
+  } else {
+  recette.style.display = "none";
+  }
+  });
+  });
+  
+  filtreIngredient.addEventListener("change", function() {
+  recettes.forEach(function(recette) {
+  if (recette.classList.contains(ingredients-${filtreIngredient.value})) {
+  recette.style.display = "block";
+  } else {
+  recette.style.display = "none";
+  }
+  });
+  });
+
+  filtres.forEach((filtre) => {
+    filtre.addEventListener("change", (e) => {
+      const filtreValue = e.target.value;
+      recettes.forEach((recette) => {
+        if (filtreValue === "tout") {
+          recette.style.display = "block";
+        } else if (!recette.classList.contains(filtreValue)) {
+          recette.style.display = "none";
+        } else {
+          recette.style.display = "block";
+        }
+      });
+    });
+  });
+  
+
 /* Tri par ordre alphabétique 
 liste = liste.sort((a, b) => a.localeCompare(b));
 /* Insert en éliminant les doublons dans le DOM 
@@ -240,3 +279,5 @@ new Set(liste).forEach((data) => {
     nom = ((data));
     document.getElementById("liste-filtre-"+type).insertAdjacentHTML("beforeend", `<li class="nom-filtre" id="${type}-${nom}" data-type="${type}" data-nom="${data}" onclick="ajouteFiltre('${type}', '${nom}')">${data}</li>`);
 });*/
+
+
