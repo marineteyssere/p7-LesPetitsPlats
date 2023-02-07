@@ -238,17 +238,7 @@ for (const option of options) {
 barre.addEventListener("input", function() {
   const value = barre.value.toLowerCase();
   recettes.forEach(function(recette) {
-  if (recette.getAttribute("data-nom").toLowerCase().includes(value)) {
-  recette.style.display = "block";
-  } else {
-  recette.style.display = "none";
-  }
-  });
-  });
-  
-  filtreIngredient.addEventListener("change", function() {
-  recettes.forEach(function(recette) {
-  if (recette.classList.contains(ingredients-${filtreIngredient.value})) {
+  if (recette.getAttribute("data-nom").toLowerCase().includes(value.length >= 3)) {
   recette.style.display = "block";
   } else {
   recette.style.display = "none";
@@ -256,21 +246,14 @@ barre.addEventListener("input", function() {
   });
   });
 
-  filtres.forEach((filtre) => {
-    filtre.addEventListener("change", (e) => {
-      const filtreValue = e.target.value;
-      recettes.forEach((recette) => {
-        if (filtreValue === "tout") {
-          recette.style.display = "block";
-        } else if (!recette.classList.contains(filtreValue)) {
-          recette.style.display = "none";
-        } else {
-          recette.style.display = "block";
-        }
-      });
-    });
-  });
+
   
+ 
+  
+ 
+
+
+
 
 /* Tri par ordre alphabétique 
 liste = liste.sort((a, b) => a.localeCompare(b));
