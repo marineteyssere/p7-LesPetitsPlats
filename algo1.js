@@ -246,6 +246,12 @@ barre.addEventListener("input", function() {
   });
   });
 
+  const filtresselect = document.querySelector(".nom-filtre");
+  filtresselect.addEventListener("click", function() {
+    console.log("cliiiiick")
+    ajouteFiltre("fruit","banane")
+    });
+
 /** Ajoute le filtre des choisis **/
 let tableauFiltresChoisis = [];
 let tableauFiltresChoisisID = [];
