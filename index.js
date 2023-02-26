@@ -1,11 +1,23 @@
-// Gère l'ouverture ingrédient / fermeture des filtres et rajouter addeventlistener sur btn , faire pour les 3 boutons avec class unique /
+// Gère l'ouverture/ fermeture des filtres 
 
 const btnIng = document.querySelectorAll(".btn-ing");
+const btnUst = document.querySelectorAll(".btn-ust");
+const btnApp = document.querySelectorAll(".btn-app");
+
+
 const filtresIng = document.querySelectorAll(".cherche-filtre-ing");
-const btnClose = document.querySelectorAll(".chevron-filtre")
+const filtresUst = document.querySelectorAll(".cherche-filtre-ust");
+const filtresApp = document.querySelectorAll(".cherche-filtre-app");
+
 
 btnIng.forEach((btn) => btn.addEventListener("click", ouvreFiltreIng));
-/*btnClose.forEach((btn) => btn.addEventListener("click", fermetureFiltre));*/
+btnUst.forEach((btn) => btn.addEventListener("click", ouvreFiltreUst));
+btnApp.forEach((btn) => btn.addEventListener("click", ouvreFiltreApp));
+
+
+filtresIng.forEach((btn) => btn.addEventListener("click", fermetureFiltreIng));
+filtresUst.forEach((btn) => btn.addEventListener("click", fermetureFiltreUst));
+filtresApp.forEach((btn) => btn.addEventListener("click", fermetureFiltreApp));
 
 
 function ouvreFiltreIng(event) {
@@ -14,55 +26,49 @@ function ouvreFiltreIng(event) {
         btnIng.style.display = "block"});
 
     filtresIng.forEach(filtreIng => {
-            filtreIng.style.display = "flex";
-    })};
+            filtreIng.style.display = "flex";})
+        };
 
-   /* let filtres = document.querySelectorAll(".cherche-filtre");
-    filtres.forEach(filtre => {
-        filtre.style.display = "none";
-    });
-    document.getElementById("btn-"+type).style.display = "none";
-    document.getElementById("cherche-"+type).style.display = "flex";
 
-function fermetureFiltre(event) {
-    filtresIng.forEach(filtreIng => {
-            filtreIng.style.display = "none";
-    })};*/
-
-// Gère l'ouverture appareil/ fermeture des filtres et rajouter addeventlistener sur btn , faire pour les 3 boutons avec class unique /
-
-const btnApp = document.querySelectorAll(".btn-app");
-const filtresApp = document.querySelectorAll(".cherche-filtre-app");
-
-btnApp.forEach((btn) => btn.addEventListener("click", ouvreFiltreApp));
-//btnFiltres.forEach((btn) => btn.addEventListener("click", fermetureFiltre));
-
+function fermetureFiltreIng(event) {
+            
+        filtresIng.forEach(filtreIng => {
+            filtreIng.style.display = "none";})
+};
+        
 
 function ouvreFiltreApp(event) {
    
-    btnApp.forEach(btnApp => {
-        btnApp.style.display = "block";
-    });
+     btnApp.forEach(btnApp => {
+            btnApp.style.display = "block";
+        });
+    
+        filtresApp.forEach(filtreApp => {
+            filtreApp.style.display = "flex";
+        })};
 
-    filtresApp.forEach(filtreApp => {
-        filtreApp.style.display = "flex";
-    })};
-
-
-// Gère l'ouverture ustensil / fermeture des filtres et rajouter addeventlistener sur btn , faire pour les 3 boutons avec class unique /
-
-const btnUst = document.querySelectorAll(".btn-ust");
-const filtresUst = document.querySelectorAll(".cherche-filtre-ust");
-
-btnUst.forEach((btn) => btn.addEventListener("click", ouvreFiltreUst));
-//btnFiltres.forEach((btn) => btn.addEventListener("click", fermetureFiltre));
+function fermetureFiltreApp(event) {
+            
+            filtresApp.forEach(filtreApp => {
+                filtreApp.style.display = "none";})
+    };
 
 
 function ouvreFiltreUst(event) {
    
-    btnUst.forEach(btnUst => {
-        btnUst.style.display = "block";
-    });
-    filtresUst.forEach(filtreUst => {
-        filtreUst.style.display = "flex";
-    })};
+        btnUst.forEach(btnUst => {
+                btnUst.style.display = "block";
+            });
+        filtresUst.forEach(filtreUst => {
+                filtreUst.style.display = "flex";
+            })};
+
+function fermetureFiltreUst(event) {
+            
+                filtresUst.forEach(filtreUst => {
+                    filtreUst.style.display = "none";})
+        };
+
+
+
+  

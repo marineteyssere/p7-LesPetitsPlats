@@ -228,7 +228,7 @@ const options = [...filtreIngredient.querySelectorAll("li")];
 console.log(options)
 for (const option of options) {
   option.onclick = function () {
-    
+
     refresh()
   };
 }
@@ -479,10 +479,14 @@ function refresh() {
  
   
  
+  /*Fabriquer moi meme les li en parcourant les recettes, supprimer les li dans mon HTML !!!!!!!Les fabriquer dynamiquement en JS
+  Voir ressource projet (doc mdn tab)
+
+  Recup recette
+  Filtrer tableau selon barre et les tag
+  Function Fabriquer recette
   
- 
-
-
+*/
 
 
 /* Tri par ordre alphabétique 
