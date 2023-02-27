@@ -95,12 +95,12 @@ function listeFiltres(type) {
                         ).join("")}`;
                         console.log("list", liste)
                         break;
-                    case "appliance":
+                    case "appareils":
                         liste.push(format(
                             `${recipe.appliance}`
                         ));
                         break;
-                    case "ustensils":
+                    case "ustensiles":
                         `${recipe.ustensils.map(data => 
                             liste.push(format(
                                 `${data}`
@@ -121,3 +121,5 @@ function listeFiltres(type) {
 }
   
 listeFiltres("ingredients");
+listeFiltres("appareils");
+listeFiltres("ustensiles");
