@@ -1,5 +1,5 @@
 // Gère l'ouverture/ fermeture des filtres 
-import recipe from "./recipes.js";
+import recipes from "./recipes.js";
 
 const btnIng = document.querySelectorAll(".btn-ing");
 const btnUst = document.querySelectorAll(".btn-ust");
@@ -69,8 +69,19 @@ function fermetureFiltreUst(event) {
                 filtresUst.forEach(filtreUst => {
                     filtreUst.style.display = "none";})
         };
+        
+function effacerEspace(data) {
+            data = data.split(" ").join("-");
+            data = data.replace("'","-");
+            return data;
+}
 
-
+function format(data) {
+            data = data.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            data = data.replace(/[.,!;:?]/g,"");
+            data = data.toLowerCase();
+            return data;
+}
 function listeFiltres(type) {
             let liste = [];
             /* Ajoute dans un tableau les données selon le type */
@@ -78,19 +89,20 @@ function listeFiltres(type) {
                 switch(type) {
                     case "ingredients":
                         `${recipe.ingredients.map(data => 
-                            liste.push(normalizer(
+                            liste.push(format(
                                 `${data.ingredient}`
                             ))
                         ).join("")}`;
+                        console.log("list", liste)
                         break;
                     case "appliance":
-                        liste.push(normalizer(
+                        liste.push(format(
                             `${recipe.appliance}`
                         ));
                         break;
                     case "ustensils":
                         `${recipe.ustensils.map(data => 
-                            liste.push(normalizer(
+                            liste.push(format(
                                 `${data}`
                             ))
                         ).join("")}`;
@@ -103,7 +115,7 @@ function listeFiltres(type) {
             liste = liste.sort((a, b) => a.localeCompare(b));
             /* Insert en éliminant les doublons dans le DOM */
             new Set(liste).forEach((data) => {
-                nom = kebabCase(normalizer(data));
+                const nom = effacerEspace(format(data));
                 document.getElementById("liste-filtre-"+type).insertAdjacentHTML("beforeend", `<li class="nom-filtre" id="${type}-${nom}" data-type="${type}" data-nom="${data}" onclick="ajouteFiltre('${type}', '${nom}')">${data}</li>`);
             });
 }

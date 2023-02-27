@@ -11,7 +11,7 @@ const filtres = document.querySelectorAll(".type-filtre");
 
 const filtreIngredient = filtres[0];
 
-displayData(recipes);
+//displayData(recipes);
 
 function displayData(recipes) {
   recipes.forEach((recipe) => {
