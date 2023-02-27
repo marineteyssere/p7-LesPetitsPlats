@@ -1,4 +1,5 @@
 // Gère l'ouverture/ fermeture des filtres 
+import recipe from "./recipes.js";
 
 const btnIng = document.querySelectorAll(".btn-ing");
 const btnUst = document.querySelectorAll(".btn-ust");
@@ -70,5 +71,41 @@ function fermetureFiltreUst(event) {
         };
 
 
-
+function listeFiltres(type) {
+            let liste = [];
+            /* Ajoute dans un tableau les données selon le type */
+            recipes.forEach(recipe => {
+                switch(type) {
+                    case "ingredients":
+                        `${recipe.ingredients.map(data => 
+                            liste.push(normalizer(
+                                `${data.ingredient}`
+                            ))
+                        ).join("")}`;
+                        break;
+                    case "appliance":
+                        liste.push(normalizer(
+                            `${recipe.appliance}`
+                        ));
+                        break;
+                    case "ustensils":
+                        `${recipe.ustensils.map(data => 
+                            liste.push(normalizer(
+                                `${data}`
+                            ))
+                        ).join("")}`;
+                        break;
+                    default:
+                        break;
+                }
+            });
+            /* Tri par ordre alphabétique */
+            liste = liste.sort((a, b) => a.localeCompare(b));
+            /* Insert en éliminant les doublons dans le DOM */
+            new Set(liste).forEach((data) => {
+                nom = kebabCase(normalizer(data));
+                document.getElementById("liste-filtre-"+type).insertAdjacentHTML("beforeend", `<li class="nom-filtre" id="${type}-${nom}" data-type="${type}" data-nom="${data}" onclick="ajouteFiltre('${type}', '${nom}')">${data}</li>`);
+            });
+}
   
+listeFiltres("ingredients");

@@ -144,7 +144,6 @@ recipes.forEach((recipes) => {
   if (!applianceExists) {
     appliances.push(recipes.appliance);
   }
-  console.log(appliances);
   // Trouve l'index de l'objet "appliances" dans le tableau "appliances"
   const applianceIndex = appliances.findIndex(
     (element) => element === recipes.appliance
@@ -170,9 +169,6 @@ recipes.forEach((recipe) => {
   }
 });
 
-console.log(ingredients);
-console.log(appliances);
-console.log(ustensils);
 
 function matchesString(filterValue) {
   const lowerCaseFilterValue = filterValue.toLowerCase();
@@ -225,7 +221,6 @@ function matchesKeywords(appliances, ustensils, ingredients) {
 }
 
 const options = [...filtreIngredient.querySelectorAll("li")];
-console.log(options)
 for (const option of options) {
   option.onclick = function () {
 
