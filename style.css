@@ -60,6 +60,12 @@ body {
   display: flex;
   width: fit-content;
 }
+.type-filtre > div {
+  display: none;
+}
+.type-filtre.filtre-open > div {
+  display: flex;
+}
 /* Boutons */
 .btn-filtre {
   border-color: transparent;
