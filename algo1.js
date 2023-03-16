@@ -6,8 +6,16 @@ let ustensils = [];
 let appliances = [];
 let searchbarContent = "";
 
+let selectedIngredients = [];
+let selectedUstensils = [];
+let selectedAppliances = [];
+
+const filtresChoisis = document.querySelector("#filtres-choisis");
+
 const barre = document.querySelector("#barre-recherche");
 const filtres = document.querySelectorAll(".type-filtre");
+
+const filtreIng = document.getElementById("liste-filtre-ingredients");
 
 const filtreIngredient = filtres[0];
 
@@ -23,19 +31,19 @@ function displayData(recipes) {
     let descriptionRecette = recipe["description"];
     let appareilsRecette = recipe["appliance"];
     let ustensilesRecette = recipe["ustensils"];
-    try{
-    construitRecette(
-      idRecette,
-      nomRecette,
-      personneRecette,
-      tempsRecette,
-      ingredientsRecette,
-      descriptionRecette,
-      appareilsRecette,
-      ustensilesRecette
-    );
-    }catch(e) {
-      console.error(e)
+    try {
+      construitRecette(
+        idRecette,
+        nomRecette,
+        personneRecette,
+        tempsRecette,
+        ingredientsRecette,
+        descriptionRecette,
+        appareilsRecette,
+        ustensilesRecette
+      );
+    } catch (e) {
+      console.error(e);
     }
   });
 }
@@ -169,7 +177,6 @@ recipes.forEach((recipe) => {
   }
 });
 
-
 function matchesString(filterValue) {
   const lowerCaseFilterValue = filterValue.toLowerCase();
 
@@ -220,21 +227,87 @@ function matchesKeywords(appliances, ustensils, ingredients) {
   };
 }
 
-const options = [...filtreIngredient.querySelectorAll("li")];
+const options = [];
+filtres.forEach((filtre) => {
+  const li = filtre.querySelectorAll("li");
+  li.forEach((elem) => {
+    options.push(elem);
+  });
+});
 for (const option of options) {
   option.onclick = function () {
-
-    refresh()
+    let type = option.dataset.type;
+    let name = option.textContent;
+    switch (type) {
+      case "ingredients": {
+        selectedIngredients.push(name);
+        break;
+      }
+      case "ustensiles": {
+        selectedUstensils.push(name);
+        break;
+      }
+      case "appareils": {
+        selectedAppliances.push(name);
+        break;
+      }
+    }
+    refresh();
   };
 }
 
+function vignettes(names, type) {
+  const selectedOptionElements = [];
+  for (const name of names) {
+    const option = document.createElement("div");
+    option.classList.add("selected-option");
+    option.textContent = name;
+    option.dataset.type = type
+    option.onclick = () => {
+      switch(type){
+        case "appareils": {
+          selectedAppliances = selectedAppliances.filter(elem=>elem !== name);
+          break;
+        }
+        case "ustensiles": {
+          selectedUstensils = selectedUstensils.filter(elem=>elem !== name);
+          break;
+        }
+        case "ingredients": {
+          selectedIngredients = selectedIngredients.filter(elem=>elem !== name);
+          break;
+        }
+      }
+      refresh()
+    };
+    selectedOptionElements.push(option);
+  }
+  return selectedOptionElements;
+}
+
 function refresh() {
+  console.log("refresh");
+  console.log({ selectedIngredients, selectedUstensils, selectedAppliances });
   const recipesThatMatch = recipes
-    .filter(matchesKeywords(appliances, ustensils, ingredients))
+    .filter(
+      matchesKeywords(
+        selectedAppliances,
+        selectedUstensils,
+        selectedIngredients
+      )
+    )
     .filter(matchesString(searchbarContent));
   displayData(recipesThatMatch);
   // refresh les filtres
+  filtresChoisis.innerHTML = "";
+  filtresChoisis.append(
+    ...vignettes(selectedIngredients, "ingredients"),
+    ...vignettes(selectedUstensils, "ustensiles"),
+    ...vignettes(selectedAppliances, "appareils")
+  );
 }
+
+refresh();
 
 /* Evenements */
 
@@ -268,7 +341,7 @@ function refresh() {
 //     switch(type) {
 //         /* Si le filtre est un ingrédient */
 //         case "ingredients":
-//             document.getElementById("champ-ingredients").value = "";          
+//             document.getElementById("champ-ingredients").value = "";
 //             recettes.forEach(function (recette) {
 //                 if(tableauRechercheID.includes("VIDE") === true) {
 //                     if(recette.classList.contains("ingredients-"+kebabCase(nom))) {
@@ -282,13 +355,13 @@ function refresh() {
 //                         if(recette.id === rechercheID.toString()) {
 //                             tableauFiltresChoisis.forEach(item => {
 //                                 if (document.getElementById(recette.id).classList.contains(item) && recette.classList.contains("recette-afficher")) {
-//                                     document.getElementById(recette.id).classList.remove("recette-cacher"); 
+//                                     document.getElementById(recette.id).classList.remove("recette-cacher");
 //                                     document.getElementById(recette.id).classList.add("recette-afficher");
 //                                 } else {
 //                                     document.getElementById(recette.id).classList.remove("recette-afficher");
 //                                     document.getElementById(recette.id).classList.add("recette-cacher");
 //                                 }
-//                             });   
+//                             });
 //                         }
 //                     });
 //                 }
@@ -310,20 +383,20 @@ function refresh() {
 //                         if(recette.id === rechercheID.toString()) {
 //                             tableauFiltresChoisis.forEach(item => {
 //                                 if (document.getElementById(recette.id).classList.contains(item) && recette.classList.contains("recette-afficher")) {
-//                                     document.getElementById(recette.id).classList.remove("recette-cacher"); 
+//                                     document.getElementById(recette.id).classList.remove("recette-cacher");
 //                                     document.getElementById(recette.id).classList.add("recette-afficher");
 //                                 } else {
 //                                     document.getElementById(recette.id).classList.remove("recette-afficher");
 //                                     document.getElementById(recette.id).classList.add("recette-cacher");
 //                                 }
-//                             });   
+//                             });
 //                         }
 //                     });
 //                 }
 //             });
 //             break;
 //         /* Si le filtre est un ustensile */
-//         case "ustensils":  
+//         case "ustensils":
 //             document.getElementById("champ-ustensils").value = "";
 //             recettes.forEach(function (recette) {
 //                 if(tableauRechercheID.includes("VIDE") === true) {
@@ -338,13 +411,13 @@ function refresh() {
 //                         if(recette.id === rechercheID.toString()) {
 //                             tableauFiltresChoisis.forEach(item => {
 //                                 if (document.getElementById(recette.id).classList.contains(item) && recette.classList.contains("recette-afficher")) {
-//                                     document.getElementById(recette.id).classList.remove("recette-cacher"); 
+//                                     document.getElementById(recette.id).classList.remove("recette-cacher");
 //                                     document.getElementById(recette.id).classList.add("recette-afficher");
 //                                 } else {
 //                                     document.getElementById(recette.id).classList.remove("recette-afficher");
 //                                     document.getElementById(recette.id).classList.add("recette-cacher");
 //                                 }
-//                             });   
+//                             });
 //                         }
 //                     });
 //                 }
@@ -381,7 +454,7 @@ function refresh() {
 //      document.getElementById(type+"-"+nom).classList.add("nom-filtre-cacher-choisis");
 //      document.getElementById(type+"-"+nom).style.display = "none";
 //  }
- 
+
 //  /** Gère la barre de recherche dans les filtres **/
 //  let tableauIngredients = [];
 //  let tableauAppareils = [];
@@ -471,10 +544,8 @@ function refresh() {
 //  rechercherFiltre("ingredients", tableauIngredients);
 //  rechercherFiltre("appliance", tableauAppareils);
 //  rechercherFiltre("ustensils", tableauUstensiles);
- 
-  
- 
-  /*Fabriquer moi meme les li en parcourant les recettes, supprimer les li dans mon HTML !!!!!!!Les fabriquer dynamiquement en JS
+
+/*Fabriquer moi meme les li en parcourant les recettes, supprimer les li dans mon HTML !!!!!!!Les fabriquer dynamiquement en JS
   Voir ressource projet (doc mdn tab)
 
   Recup recette
@@ -483,7 +554,6 @@ function refresh() {
   
 */
 
-
 /* Tri par ordre alphabétique 
 liste = liste.sort((a, b) => a.localeCompare(b));
 /* Insert en éliminant les doublons dans le DOM 
@@ -491,5 +561,3 @@ new Set(liste).forEach((data) => {
     nom = ((data));
     document.getElementById("liste-filtre-"+type).insertAdjacentHTML("beforeend", `<li class="nom-filtre" id="${type}-${nom}" data-type="${type}" data-nom="${data}" onclick="ajouteFiltre('${type}', '${nom}')">${data}</li>`);
 });*/
-
-

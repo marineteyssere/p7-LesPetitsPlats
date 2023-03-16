@@ -430,4 +430,16 @@ body {
   }
 }
 
+.selected-option{
+  color: white;
+}
 
+.selected-option[data-type="appareils"] {
+  background-color: #68d9a4;
+}
+.selected-option[data-type="ustensiles"] {
+  background-color: #ed6454;
+}
+.selected-option[data-type="ingredients"] {
+  background-color: #3282f7;
+}

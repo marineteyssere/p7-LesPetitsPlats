@@ -4,13 +4,16 @@ import recipes from "./recipes.js";
 function prepareFiltre(filtre) {
   const button = filtre.querySelector("button");
   button.onclick = function () {
-      filtre.classList.add("filtre-open");
-      
-      const chevronFermant = filtre.querySelector(".chevron-ouvert-filtre");
+    filtre.classList.add("filtre-open");
+
+    const chevronFermant = filtre.querySelector(".chevron-ouvert-filtre");
     chevronFermant.onclick = function () {
       filtre.classList.remove("filtre-open");
     };
 
+    listeFiltres("ingredients");
+    listeFiltres("appareils");
+    listeFiltres("ustensiles");
   };
 }
 
@@ -22,9 +25,10 @@ prepareFiltre(btnIng);
 prepareFiltre(btnUst);
 prepareFiltre(btnApp);
 
-
-
-
+function ajouteFiltre(type, nom) {
+  alert("ajouteFiltre");
+  console.log("filtre ", type, " nom ", nom);
+}
 
 function effacerEspace(data) {
   data = data.split(" ").join("-");
@@ -47,7 +51,6 @@ function listeFiltres(type) {
         `${recipe.ingredients
           .map((data) => liste.push(format(`${data.ingredient}`)))
           .join("")}`;
-        console.log("list", liste);
         break;
       case "appareils":
         liste.push(format(`${recipe.appliance}`));
@@ -66,12 +69,19 @@ function listeFiltres(type) {
   /* Insert en éliminant les doublons dans le DOM */
   new Set(liste).forEach((data) => {
     const nom = effacerEspace(format(data));
+    const elem = document.createElement("li");
+    elem.id = `${type}-${nom}`;
+    elem.dataset.type = type
+    elem.classList.add("nom-filtre");
+    elem.textContent = data;
+    // elem.onclick = function (e) {
+    //   ajouteFiltre(type, nom);
+    // };
+    // `<li class="nom-filtre" id="${type}-${nom}" data-type="${type}" data-nom="${nom}" onclick="ajouteFiltre('${type}', '${nom}')">${data}</li>`
+
     document
       .getElementById("liste-filtre-" + type)
-      .insertAdjacentHTML(
-        "beforeend",
-        `<li class="nom-filtre" id="${type}-${nom}" data-type="${type}" data-nom="${data}" onclick="ajouteFiltre('${type}', '${nom}')">${data}</li>`
-      );
+      .insertAdjacentElement("beforeend", elem);
   });
 }
 
