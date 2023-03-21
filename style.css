@@ -430,8 +430,18 @@ body {
   }
 }
 
+/* filtres choisis */ 
+
 .selected-option{
   color: white;
+  border-radius: 5px;
+  display: inline-block;
+  line-height: 30px;
+  min-height: 30px;
+  min-width: 100px;
+  margin: 0 10px 10px 0;
+  padding: 10px 20px;
+  position: relative;
 }
 
 .selected-option[data-type="appareils"] {
@@ -442,4 +452,14 @@ body {
 }
 .selected-option[data-type="ingredients"] {
   background-color: #3282f7;
+}
+
+.fa-times-circle {
+  float: right;
+  height: 30px;
+  line-height: 30px;
+  margin-left: 10px;
+}
+.fa-times-circle:hover {
+  cursor: pointer;
 }

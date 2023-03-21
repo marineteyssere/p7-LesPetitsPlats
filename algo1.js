@@ -262,7 +262,10 @@ function vignettes(names, type) {
     const option = document.createElement("div");
     option.classList.add("selected-option");
     option.textContent = name;
-    option.dataset.type = type
+    option.dataset.type = type;
+    const icon = document.createElement("i");
+    icon.classList.add("fas", "fa-times-circle");
+    option.appendChild(icon); // Ajout de l'icône à l'élément "option"
     option.onclick = () => {
       switch(type){
         case "appareils": {
