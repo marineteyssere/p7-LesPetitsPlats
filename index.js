@@ -9,13 +9,13 @@ function prepareFiltre(filtre) {
     const chevronFermant = filtre.querySelector(".chevron-ouvert-filtre");
     chevronFermant.onclick = function () {
       filtre.classList.remove("filtre-open");
+      button.style.display = "block";
     };
 
-    listeFiltres("ingredients");
-    listeFiltres("appareils");
-    listeFiltres("ustensiles");
+    button.style.display = "none";
   };
 }
+
 
 const btnIng = document.querySelector(".filtre-ing");
 const btnUst = document.querySelector(".filtre-ust");
@@ -24,11 +24,6 @@ const btnApp = document.querySelector(".filtre-app");
 prepareFiltre(btnIng);
 prepareFiltre(btnUst);
 prepareFiltre(btnApp);
-
-function ajouteFiltre(type, nom) {
-  alert("ajouteFiltre");
-  console.log("filtre ", type, " nom ", nom);
-}
 
 function effacerEspace(data) {
   data = data.split(" ").join("-");

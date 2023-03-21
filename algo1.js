@@ -10,18 +10,14 @@ let selectedIngredients = [];
 let selectedUstensils = [];
 let selectedAppliances = [];
 
+const listeRecettes = document.getElementById("recettes");
 const filtresChoisis = document.querySelector("#filtres-choisis");
 
 const barre = document.querySelector("#barre-recherche");
 const filtres = document.querySelectorAll(".type-filtre");
 
-const filtreIng = document.getElementById("liste-filtre-ingredients");
-
-const filtreIngredient = filtres[0];
-
-//displayData(recipes);
-
 function displayData(recipes) {
+  listeRecettes.innerHTML = ""
   recipes.forEach((recipe) => {
     let idRecette = recipe["id"];
     let nomRecette = recipe["name"];
@@ -31,6 +27,7 @@ function displayData(recipes) {
     let descriptionRecette = recipe["description"];
     let appareilsRecette = recipe["appliance"];
     let ustensilesRecette = recipe["ustensils"];
+    console.log({recipe})
     try {
       construitRecette(
         idRecette,
@@ -47,16 +44,11 @@ function displayData(recipes) {
     }
   });
 }
-/*** Gère les espaces ***/
-function space(data) {
-  data = data.replace(" ", "-");
-  data = data.replace("'", "-");
-  return data;
-}
 
 function construitRecette(
   id,
   nom,
+  personne,
   temps,
   ingredients,
   description,
@@ -64,52 +56,24 @@ function construitRecette(
   ustensils
 ) {
   /* Récupère les recettes et créer l'élément */
-  let listeRecettes = document.getElementById("recettes");
   let recette = document.createElement("article");
   recette.setAttribute("id", `${id}`);
   recette.setAttribute("data-nom", `${nom}`);
-  recette.classList.add("recette");
-
-  // Vérifie si ingredients est un tableau avant d'utiliser la fonction map
-  if (Array.isArray(ingredients)) {
-    ingredients.map((ingredient) => {
-      if (typeof ingredient === "object") {
-        recette.classList.add("ingredients-" + space(ingredient.ingredient));
-      }
-    });
-  } else {
-    console.log("ingredients n'est pas un tableau");
-  }
-
-  // Modification pour éviter l'erreur de DOMException
-  if (appliance && appliance.length > 0) {
-    let applianceName = appliance;
-    applianceName = applianceName.replace(/[^a-zA-Z0-9-_]/g, ""); // supprime tous les caractères autres que alphanumériques et tirets
-    const token = `appliance-${space(applianceName)}`;
-    recette.classList.add(token);
-  }
-
-  if (ustensils instanceof Array) {
-    ustensils.forEach((ustensil) =>
-      recette.classList.add("ustensils-" + space(ustensil))
-    );
-  } else {
-    // ustensils n'est pas un tableau, traitez-le comme tel
-  }
+  recette.classList.add("plat");
 
   /* Créer le template */
   let recetteTemplate = "";
   if (Array.isArray(ingredients)) {
     recetteTemplate = `
-      <div class="image-recette"></div>
-      <div class="contenu-recette">
-          <h1 class="titre-recette">${nom}</h1>
+      <div class="image-plat"></div>
+      <div class="description-plat">
+          <h1 class="titre-plat">${nom}</h1>
           <span class="temps-preparation">${temps}</span>
           <div class="liste-ingredient">
               ${ingredients
                 .map(
                   (ingredient) =>
-                    `<span class="type-ingredient">${ingredient}<span class="nombre-ingredient">${
+                    `<span class="type-ingredient">${ingredient.ingredient}<span class="nombre-ingredient">${
                       ingredient.quantity || ""
                     }${ingredient.quantite || ""} ${
                       ingredient.unit || ""
@@ -117,21 +81,18 @@ function construitRecette(
                 )
                 .join(" ")}
           </div>
-          <div class="description-recette">
+          <div class="recette">
               <p>${description}</p>
           </div>
       </div>
     `;
   }
   recette.innerHTML = recetteTemplate;
+  console.log("displaying recipe", {recette, ingredients, count: listeRecettes.childElementCount})
   listeRecettes.appendChild(recette);
 }
 
-/** Liste des recettes **/
-let recettes = document.querySelectorAll(".recette");
-
 /*** Gère les filtres ***/
-
 recipes.forEach((recipes) => {
   // Vérifie si l'objet "ingredients" existe déjà dans le tableau "ingredients"
   const exists = ingredients.some(
@@ -261,11 +222,8 @@ function vignettes(names, type) {
   for (const name of names) {
     const option = document.createElement("div");
     option.classList.add("selected-option");
-    option.textContent = name;
     option.dataset.type = type;
-    const icon = document.createElement("i");
-    icon.classList.add("fas", "fa-times-circle");
-    option.appendChild(icon); // Ajout de l'icône à l'élément "option"
+    option.innerHTML = `${name}<i class="fas fa-times-circle"></i>`;
     option.onclick = () => {
       switch(type){
         case "appareils": {
