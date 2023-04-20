@@ -168,18 +168,24 @@ barre.oninput = function (event) {
 function matchesKeywords(appliances, ustensils, ingredients) {
   return function (recipe) {
     if (appliances.length > 0) {
-      if (appliances.some((item) => item !== recipe.appliance)) return false;
+      if (appliances.some((item) => item !== recipe.appliance.toLowerCase()))
+        return false;
     }
 
     if (ustensils.length > 0) {
       for (const ustensil of ustensils) {
-        if (!recipe.ustensils.includes(ustensil)) return false;
+        if (!recipe.ustensils.some((item) => item.toLowerCase() == ustensil))
+          return false;
       }
     }
 
     if (ingredients.length > 0) {
       for (const ingredient of ingredients) {
-        if (!recipe.ingredients.find((item) => item.ingredient === ingredient))
+        if (
+          !recipe.ingredients.find(
+            (item) => item.ingredient.toLowerCase() === ingredient
+          )
+        )
           return false;
       }
     }
@@ -187,6 +193,7 @@ function matchesKeywords(appliances, ustensils, ingredients) {
     return true;
   };
 }
+
 
 const options = [];
 filtres.forEach((filtre) => {
