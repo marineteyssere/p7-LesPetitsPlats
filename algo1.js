@@ -1,4 +1,5 @@
-/***********  Algo boucles native  ***************/
+// boucles natives 
+
 import recipes from "./recipes.js";
 
 let ingredients = [];
@@ -17,8 +18,9 @@ const barre = document.querySelector("#barre-recherche");
 const filtres = document.querySelectorAll(".type-filtre");
 
 function displayData(recipes) {
-  listeRecettes.innerHTML = ""
-  recipes.forEach((recipe) => {
+  listeRecettes.innerHTML = "";
+  for (let i = 0; i < recipes.length; i++) {
+    let recipe = recipes[i];
     let idRecette = recipe["id"];
     let nomRecette = recipe["name"];
     let personneRecette = recipe["servings"];
@@ -27,7 +29,7 @@ function displayData(recipes) {
     let descriptionRecette = recipe["description"];
     let appareilsRecette = recipe["appliance"];
     let ustensilesRecette = recipe["ustensils"];
-    console.log({recipe})
+    console.log({ recipe });
     try {
       construitRecette(
         idRecette,
@@ -42,7 +44,7 @@ function displayData(recipes) {
     } catch (e) {
       console.error(e);
     }
-  });
+  }
 }
 
 function construitRecette(
@@ -55,31 +57,27 @@ function construitRecette(
   appliance,
   ustensils
 ) {
-  /* Récupère les recettes et créer l'élément */
-  let recette = document.createElement("article");
+  const recette = document.createElement("article");
   recette.setAttribute("id", `${id}`);
   recette.setAttribute("data-nom", `${nom}`);
   recette.classList.add("plat");
 
-  /* Créer le template */
   let recetteTemplate = "";
   if (Array.isArray(ingredients)) {
+    let ingredientsHTML = "";
+    for (let i = 0; i < ingredients.length; i++) {
+      let ingredient = ingredients[i];
+      ingredientsHTML += `<span class="type-ingredient">${ingredient.ingredient}<span class="nombre-ingredient">${
+        ingredient.quantity || ""
+      }${ingredient.quantite || ""} ${ingredient.unit || ""}</span></span>`;
+    }
     recetteTemplate = `
       <div class="image-plat"></div>
       <div class="description-plat">
           <h1 class="titre-plat">${nom}</h1>
           <span class="temps-preparation">${temps}</span>
           <div class="liste-ingredient">
-              ${ingredients
-                .map(
-                  (ingredient) =>
-                    `<span class="type-ingredient">${ingredient.ingredient}<span class="nombre-ingredient">${
-                      ingredient.quantity || ""
-                    }${ingredient.quantite || ""} ${
-                      ingredient.unit || ""
-                    }</span></span>`
-                )
-                .join(" ")}
+              ${ingredientsHTML}
           </div>
           <div class="recette">
               <p>${description}</p>
@@ -88,7 +86,7 @@ function construitRecette(
     `;
   }
   recette.innerHTML = recetteTemplate;
-  console.log("displaying recipe", {recette, ingredients, count: listeRecettes.childElementCount})
+  console.log("displaying recipe", { recette, ingredients, count: listeRecettes.childElementCount });
   listeRecettes.appendChild(recette);
 }
 
