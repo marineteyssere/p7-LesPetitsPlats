@@ -90,3 +90,5 @@ function construitRecette(
   console.log("displaying recipe", { recette, ingredients, count: listeRecettes.childElementCount });
   listeRecettes.appendChild(recette);
 }
+
+displayData(recipes);
