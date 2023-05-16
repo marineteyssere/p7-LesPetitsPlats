@@ -136,6 +136,8 @@ recipes.forEach((recipe) => {
   }
 });
 
+// Barre
+
 function matchesString(filterValue) {
   const lowerCaseFilterValue = filterValue.toLowerCase();
 
@@ -162,6 +164,8 @@ barre.oninput = function (event) {
   searchbarContent = eventBarre;
   refresh();
 };
+
+// Algo filtre
 
 function matchesKeywords(appliances, ustensils, ingredients) {
   return function (recipe) {
