@@ -195,11 +195,11 @@ function matchesString(filterValue) {
   
  
   function refresh() {
-    const recipesThatMatch = recipes.filter(matchesKeywords(selectedAppliances, selectedUstensils, selectedIngredients).bind(this));
+    let recipesThatMatch = recipes.filter(matchesKeywords(selectedAppliances, selectedUstensils, selectedIngredients).bind(this));
     if (searchbarContent.length > 0) {
       const lowerCaseSearchBarContent = searchbarContent.toLowerCase();
        // barre
-      recipesThatMatch.filter((recipe) => {
+      recipesThatMatch = recipesThatMatch.filter((recipe) => {
         return (
           recipe.name.toLowerCase().includes(lowerCaseSearchBarContent) ||
           recipe.description.toLowerCase().includes(lowerCaseSearchBarContent) ||
