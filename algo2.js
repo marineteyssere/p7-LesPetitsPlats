@@ -121,6 +121,8 @@ function matchesString(filterValue) {
     searchbarContent = eventBarre;
     refresh();
   });
+
+  // Algo filtre
   
   function matchesKeywords(appliances, ustensils, ingredients) {
     return function (recipe) {
@@ -191,10 +193,12 @@ function matchesString(filterValue) {
     });
   }
   
+ 
   function refresh() {
     const recipesThatMatch = recipes.filter(matchesKeywords(selectedAppliances, selectedUstensils, selectedIngredients).bind(this));
     if (searchbarContent.length > 0) {
       const lowerCaseSearchBarContent = searchbarContent.toLowerCase();
+       // barre
       recipesThatMatch.filter((recipe) => {
         return (
           recipe.name.toLowerCase().includes(lowerCaseSearchBarContent) ||
