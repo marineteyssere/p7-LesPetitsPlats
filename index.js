@@ -32,8 +32,8 @@ function trierListe(liste) {
   const items = liste.querySelectorAll(".nom-filtre");
   const itemsArr = Array.from(items);
   itemsArr.sort(function(a, b) {
-    const aText = a.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    const bText = b.textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const aText = a.textContent.toLowerCase();
+    const bText = b.textContent.toLowerCase();
     return aText.localeCompare(bText);
   });
   itemsArr.forEach(function(item) {
