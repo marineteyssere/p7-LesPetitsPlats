@@ -139,11 +139,12 @@ recipes.forEach((recipe) => {
 // Barre
 
 function matchesString(filterValue) {
+ 
   const lowerCaseFilterValue = filterValue.toLowerCase();
 
   return function (recipe) {
     // On cherche dans le nom, la description et les ingrédients
-
+    if (filterValue.length>3) return true
     const RecipeName = recipe.name.toLowerCase();
     if (RecipeName.includes(lowerCaseFilterValue)) return true;
 
