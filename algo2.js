@@ -196,7 +196,7 @@ function matchesString(filterValue) {
  
   function refresh() {
     let recipesThatMatch = recipes.filter(matchesKeywords(selectedAppliances, selectedUstensils, selectedIngredients).bind(this));
-    if (searchbarContent.length > 0) {
+    if (searchbarContent.length > 2) {
       const lowerCaseSearchBarContent = searchbarContent.toLowerCase();
        // barre
       recipesThatMatch = recipesThatMatch.filter((recipe) => {
