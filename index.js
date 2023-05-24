@@ -54,8 +54,6 @@ function effacerEspace(data) {
 }
 
 function format(data) {
-  data = data.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-  data = data.replace(/[.,!;:?]/g, "");
   data = data.toLowerCase();
   return data;
 }
