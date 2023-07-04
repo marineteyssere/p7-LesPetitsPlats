@@ -303,7 +303,7 @@ const btnUst = document.querySelector(".filtre-ust");
 const btnApp = document.querySelector(".filtre-app");
 
 prepareFiltre(btnIng, "ingredients");
-prepareFiltre(btnUst, "ustensils");
+prepareFiltre(btnUst, "ustensiles");
 prepareFiltre(btnApp, "appareils");
 
 /* BOUTONS FILTRES RECHERCHE */
