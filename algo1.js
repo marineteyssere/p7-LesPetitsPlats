@@ -2,6 +2,10 @@
 
 import recipes from "./recipes.js";
 
+let rechercheIngredient = "";
+let rechercheAppareil = "";
+let rechercheUstensils = "";
+
 let ingredients = [];
 let ustensils = [];
 let appliances = [];
@@ -269,6 +273,7 @@ function refresh() {
     )
     .filter(matchesString(searchbarContent));
   displayData(recipesThatMatch);
+  updateFilter(recipesThatMatch);
   // refresh les filtres
   filtresChoisis.innerHTML = "";
   filtresChoisis.append(
@@ -282,7 +287,6 @@ refresh();
 
 
 // Gère l'ouverture/ fermeture des filtres
-import recipes from "./recipes.js";
 
 function prepareFiltre(filtre, type) {
     const button = filtre.querySelector("button");
@@ -340,9 +344,9 @@ const btnIng = document.querySelector(".filtre-ing");
 const btnUst = document.querySelector(".filtre-ust");
 const btnApp = document.querySelector(".filtre-app");
 
-prepareFiltre(btnIng);
-prepareFiltre(btnUst);
-prepareFiltre(btnApp);
+prepareFiltre(btnIng, "ingredients");
+prepareFiltre(btnUst, "ustensiles");
+prepareFiltre(btnApp, "appareils");
 
 /* BOUTONS FILTRES RECHERCHE */
 
@@ -376,49 +380,58 @@ function format(data) {
   data = data.toLowerCase();
   return data;
 }
-function listeFiltres(type) {
-  let liste = [];
-  /* Ajoute dans un tableau les données selon le type */
-  recipes.forEach((recipe) => {
-    switch (type) {
-      case "ingredients":
-        `${recipe.ingredients
-          .map((data) => liste.push(format(`${data.ingredient}`)))
-          .join("")}`;
-        break;
-      case "appareils":
-        liste.push(format(`${recipe.appliance}`));
-        break;
-      case "ustensiles":
-        `${recipe.ustensils
-          .map((data) => liste.push(format(`${data}`)))
-          .join("")}`;
-        break;
-      default:
-        break;
+function listeFiltres(recettes, type, recherche) {
+    let liste = [];
+    console.log(recettes.length, recherche);
+    /* Ajoute dans un tableau les données selon le type */
+    recettes.forEach((recipe) => {
+      switch (type) {
+        case "ingredients":
+          `${recipe.ingredients
+            .map((data) => liste.push(format(`${data.ingredient}`)))
+            .join("")}`;
+          break;
+        case "appareils":
+          liste.push(format(`${recipe.appliance}`));
+          break;
+        case "ustensiles":
+          `${recipe.ustensils
+            .map((data) => liste.push(format(`${data}`)))
+            .join("")}`;
+          break;
+        default:
+          break;
+      }
+    });
+    /* Tri par ordre alphabétique */
+    liste = liste.sort((a, b) => a.localeCompare(b));
+    if (recherche) {
+      liste = liste.filter(
+        (mot) => mot.includes(recherche) || recherche.includes(mot)
+      );
+    } else {
+      console.log("no research");
     }
-  });
-  /* Tri par ordre alphabétique */
-  liste = liste.sort((a, b) => a.localeCompare(b));
-  /* Insert en éliminant les doublons dans le DOM */
-  new Set(liste).forEach((data) => {
-    const nom = effacerEspace(format(data));
-    const elem = document.createElement("li");
-    elem.id = `${type}-${nom}`;
-    elem.dataset.type = type
-    elem.classList.add("nom-filtre");
-    elem.textContent = data;
-    // elem.onclick = function (e) {
-    //   ajouteFiltre(type, nom);
-    // };
-    // `<li class="nom-filtre" id="${type}-${nom}" data-type="${type}" data-nom="${nom}" onclick="ajouteFiltre('${type}', '${nom}')">${data}</li>`
+    /* Insert en éliminant les doublons dans le DOM */
+    document.getElementById("liste-filtre-" + type).innerHTML = "";
+    new Set(liste).forEach((data) => {
+      const nom = effacerEspace(format(data));
+      const elem = document.createElement("li");
+      elem.id = `${type}-${nom}`;
+      elem.dataset.type = type;
+      elem.classList.add("nom-filtre");
+      elem.textContent = data;
+  
+      document
+        .getElementById("liste-filtre-" + type)
+        .insertAdjacentElement("beforeend", elem);
+    });
+  }
+  
+  function updateFilter(data) {
+    listeFiltres(data, "ingredients", rechercheIngredient);
+    listeFiltres(data, "appareils", rechercheAppareil);
+    listeFiltres(data, "ustensiles", rechercheUstensils);
+  }
 
-    document
-      .getElementById("liste-filtre-" + type)
-      .insertAdjacentElement("beforeend", elem);
-  });
-}
-
-listeFiltres("ingredients");
-listeFiltres("appareils");
-listeFiltres("ustensiles");
+  refresh()
