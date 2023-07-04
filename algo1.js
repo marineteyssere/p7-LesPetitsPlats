@@ -284,21 +284,57 @@ refresh();
 // Gère l'ouverture/ fermeture des filtres
 import recipes from "./recipes.js";
 
-function prepareFiltre(filtre) {
-  const button = filtre.querySelector("button");
-  button.onclick = function () {
-    filtre.classList.add("filtre-open");
-
-    const chevronFermant = filtre.querySelector(".chevron-ouvert-filtre");
-    chevronFermant.onclick = function () {
-      filtre.classList.remove("filtre-open");
-      button.style.display = "block";
+function prepareFiltre(filtre, type) {
+    const button = filtre.querySelector("button");
+    button.onclick = function () {
+      filtre.classList.add("filtre-open");
+  
+      console.log(filtre.querySelector("input"));
+  
+      filtre.querySelector("input").oninput = (event) => {
+        const value = event.target.value;
+  
+        switch (type) {
+          case "ingredients":
+            rechercheIngredient = value;
+            break;
+          case "appareils":
+            rechercheAppareil = value;
+            break;
+          case "ustensiles":
+            rechercheUstensils = value;
+            break;
+          default:
+            break;
+        }
+  
+        refresh();
+      };
+  
+      const chevronFermant = filtre.querySelector(".chevron-ouvert-filtre");
+      chevronFermant.onclick = function () {
+        filtre.classList.remove("filtre-open");
+        button.style.display = "block";
+  
+        switch (type) {
+          case "ingredients":
+            rechercheIngredient = "";
+            break;
+          case "appareils":
+            rechercheAppareil = "";
+            break;
+          case "ustensiles":
+            rechercheUstensils = "";
+            break;
+          default:
+            break;
+        }
+      };
+  
+      button.style.display = "none";
     };
-
-    button.style.display = "none";
-  };
-}
-
+  }
+  
 
 const btnIng = document.querySelector(".filtre-ing");
 const btnUst = document.querySelector(".filtre-ust");
