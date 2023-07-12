@@ -164,28 +164,30 @@ function matchesKeywords(appliances, ustensils, ingredients) {
   };
 }
 
-const options = Array.from(filtres).flatMap((filtre) =>
-  Array.from(filtre.querySelectorAll("li"))
-);
+function makeOptions() {
+  const options = Array.from(filtres).flatMap((filtre) =>
+    Array.from(filtre.querySelectorAll("li"))
+  );
 
-options.forEach((option) => {
-  option.addEventListener("click", () => {
-    const type = option.dataset.type;
-    const name = option.textContent;
-    switch (type) {
-      case "ingredients":
-        selectedIngredients.push(name);
-        break;
-      case "ustensiles":
-        selectedUstensils.push(name);
-        break;
-      case "appareils":
-        selectedAppliances.push(name);
-        break;
-    }
-    refresh();
+  options.forEach((option) => {
+    option.addEventListener("click", () => {
+      const type = option.dataset.type;
+      const name = option.textContent;
+      switch (type) {
+        case "ingredients":
+          selectedIngredients.push(name);
+          break;
+        case "ustensiles":
+          selectedUstensils.push(name);
+          break;
+        case "appareils":
+          selectedAppliances.push(name);
+          break;
+      }
+      refresh();
+    });
   });
-});
+}
 
 function vignettes(names, type) {
   return names.map((name) => {
@@ -394,6 +396,7 @@ function updateFilter(data) {
   listeFiltres(data, "ingredients", rechercheIngredient);
   listeFiltres(data, "appareils", rechercheAppareil);
   listeFiltres(data, "ustensiles", rechercheUstensils);
+  makeOptions()
 }
 
 refresh();
