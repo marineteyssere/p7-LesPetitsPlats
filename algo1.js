@@ -1,4 +1,4 @@
-// boucles natives 
+// boucles natives
 
 import recipes from "./recipes.js";
 
@@ -71,9 +71,11 @@ function construitRecette(
     let ingredientsHTML = "";
     for (let i = 0; i < ingredients.length; i++) {
       let ingredient = ingredients[i];
-      ingredientsHTML += `<span class="type-ingredient">${ingredient.ingredient}<span class="nombre-ingredient">${
-        ingredient.quantity || ""
-      }${ingredient.quantite || ""} ${ingredient.unit || ""}</span></span>`;
+      ingredientsHTML += `<span class="type-ingredient">${
+        ingredient.ingredient
+      }<span class="nombre-ingredient">${ingredient.quantity || ""}${
+        ingredient.quantite || ""
+      } ${ingredient.unit || ""}</span></span>`;
     }
     recetteTemplate = `
       <div class="image-plat"></div>
@@ -90,7 +92,11 @@ function construitRecette(
     `;
   }
   recette.innerHTML = recetteTemplate;
-  console.log("displaying recipe", { recette, ingredients, count: listeRecettes.childElementCount });
+  console.log("displaying recipe", {
+    recette,
+    ingredients,
+    count: listeRecettes.childElementCount,
+  });
   listeRecettes.appendChild(recette);
 }
 
@@ -143,12 +149,11 @@ recipes.forEach((recipe) => {
 // Barre
 
 function matchesString(filterValue) {
- 
   const lowerCaseFilterValue = filterValue.toLowerCase();
 
   return function (recipe) {
     // On cherche dans le nom, la description et les ingrédients
-    if (filterValue.length>3) return true
+    if (filterValue.length > 3) return true;
     const RecipeName = recipe.name.toLowerCase();
     if (RecipeName.includes(lowerCaseFilterValue)) return true;
 
@@ -201,35 +206,38 @@ function matchesKeywords(appliances, ustensils, ingredients) {
   };
 }
 
-
-const options = [];
-filtres.forEach((filtre) => {
-  const li = filtre.querySelectorAll("li");
-  li.forEach((elem) => {
-    options.push(elem);
+function makeOptions() {
+  const options = [];
+  filtres.forEach((filtre) => {
+    const li = filtre.querySelectorAll("li");
+    li.forEach((elem) => {
+      options.push(elem);
+    });
   });
-});
-for (const option of options) {
-  option.onclick = function () {
-    let type = option.dataset.type;
-    let name = option.textContent;
-    switch (type) {
-      case "ingredients": {
-        selectedIngredients.push(name);
-        break;
+  for (const option of options) {
+    option.onclick = function () {
+      let type = option.dataset.type;
+      let name = option.textContent;
+      switch (type) {
+        case "ingredients": {
+          selectedIngredients.push(name);
+          break;
+        }
+        case "ustensiles": {
+          selectedUstensils.push(name);
+          break;
+        }
+        case "appareils": {
+          selectedAppliances.push(name);
+          break;
+        }
       }
-      case "ustensiles": {
-        selectedUstensils.push(name);
-        break;
-      }
-      case "appareils": {
-        selectedAppliances.push(name);
-        break;
-      }
-    }
-    refresh();
-  };
+      refresh();
+    };
+  }
 }
+
+makeOptions()
 
 function vignettes(names, type) {
   const selectedOptionElements = [];
@@ -239,21 +247,25 @@ function vignettes(names, type) {
     option.dataset.type = type;
     option.innerHTML = `${name}<i class="fas fa-times-circle"></i>`;
     option.onclick = () => {
-      switch(type){
+      switch (type) {
         case "appareils": {
-          selectedAppliances = selectedAppliances.filter(elem=>elem !== name);
+          selectedAppliances = selectedAppliances.filter(
+            (elem) => elem !== name
+          );
           break;
         }
         case "ustensiles": {
-          selectedUstensils = selectedUstensils.filter(elem=>elem !== name);
+          selectedUstensils = selectedUstensils.filter((elem) => elem !== name);
           break;
         }
         case "ingredients": {
-          selectedIngredients = selectedIngredients.filter(elem=>elem !== name);
+          selectedIngredients = selectedIngredients.filter(
+            (elem) => elem !== name
+          );
           break;
         }
       }
-      refresh()
+      refresh();
     };
     selectedOptionElements.push(option);
   }
@@ -285,60 +297,58 @@ function refresh() {
 
 refresh();
 
-
 // Gère l'ouverture/ fermeture des filtres
 
 function prepareFiltre(filtre, type) {
-    const button = filtre.querySelector("button");
-    button.onclick = function () {
-      filtre.classList.add("filtre-open");
-  
-      console.log(filtre.querySelector("input"));
-  
-      filtre.querySelector("input").oninput = (event) => {
-        const value = event.target.value;
-  
-        switch (type) {
-          case "ingredients":
-            rechercheIngredient = value;
-            break;
-          case "appareils":
-            rechercheAppareil = value;
-            break;
-          case "ustensiles":
-            rechercheUstensils = value;
-            break;
-          default:
-            break;
-        }
-  
-        refresh();
-      };
-  
-      const chevronFermant = filtre.querySelector(".chevron-ouvert-filtre");
-      chevronFermant.onclick = function () {
-        filtre.classList.remove("filtre-open");
-        button.style.display = "block";
-  
-        switch (type) {
-          case "ingredients":
-            rechercheIngredient = "";
-            break;
-          case "appareils":
-            rechercheAppareil = "";
-            break;
-          case "ustensiles":
-            rechercheUstensils = "";
-            break;
-          default:
-            break;
-        }
-      };
-  
-      button.style.display = "none";
+  const button = filtre.querySelector("button");
+  button.onclick = function () {
+    filtre.classList.add("filtre-open");
+
+    console.log(filtre.querySelector("input"));
+
+    filtre.querySelector("input").oninput = (event) => {
+      const value = event.target.value;
+
+      switch (type) {
+        case "ingredients":
+          rechercheIngredient = value;
+          break;
+        case "appareils":
+          rechercheAppareil = value;
+          break;
+        case "ustensiles":
+          rechercheUstensils = value;
+          break;
+        default:
+          break;
+      }
+
+      refresh();
     };
-  }
-  
+
+    const chevronFermant = filtre.querySelector(".chevron-ouvert-filtre");
+    chevronFermant.onclick = function () {
+      filtre.classList.remove("filtre-open");
+      button.style.display = "block";
+
+      switch (type) {
+        case "ingredients":
+          rechercheIngredient = "";
+          break;
+        case "appareils":
+          rechercheAppareil = "";
+          break;
+        case "ustensiles":
+          rechercheUstensils = "";
+          break;
+        default:
+          break;
+      }
+    };
+
+    button.style.display = "none";
+  };
+}
 
 const btnIng = document.querySelector(".filtre-ing");
 const btnUst = document.querySelector(".filtre-ust");
@@ -350,25 +360,23 @@ prepareFiltre(btnApp, "appareils");
 
 /* BOUTONS FILTRES RECHERCHE */
 
-
 function trierListe(liste) {
   const items = liste.querySelectorAll(".nom-filtre");
   const itemsArr = Array.from(items);
-  itemsArr.sort(function(a, b) {
+  itemsArr.sort(function (a, b) {
     const aText = a.textContent.toLowerCase();
     const bText = b.textContent.toLowerCase();
     return aText.localeCompare(bText);
   });
-  itemsArr.forEach(function(item) {
+  itemsArr.forEach(function (item) {
     liste.removeChild(item);
   });
-  itemsArr.forEach(function(item) {
+  itemsArr.forEach(function (item) {
     liste.appendChild(item);
   });
 }
 
 /* BOUTONS FILTRES RECHERCHE */
-
 
 function effacerEspace(data) {
   data = data.split(" ").join("-");
@@ -381,57 +389,58 @@ function format(data) {
   return data;
 }
 function listeFiltres(recettes, type, recherche) {
-    let liste = [];
-    console.log(recettes.length, recherche);
-    /* Ajoute dans un tableau les données selon le type */
-    recettes.forEach((recipe) => {
-      switch (type) {
-        case "ingredients":
-          `${recipe.ingredients
-            .map((data) => liste.push(format(`${data.ingredient}`)))
-            .join("")}`;
-          break;
-        case "appareils":
-          liste.push(format(`${recipe.appliance}`));
-          break;
-        case "ustensiles":
-          `${recipe.ustensils
-            .map((data) => liste.push(format(`${data}`)))
-            .join("")}`;
-          break;
-        default:
-          break;
-      }
-    });
-    /* Tri par ordre alphabétique */
-    liste = liste.sort((a, b) => a.localeCompare(b));
-    if (recherche) {
-      liste = liste.filter(
-        (mot) => mot.includes(recherche) || recherche.includes(mot)
-      );
-    } else {
-      console.log("no research");
+  let liste = [];
+  console.log(recettes.length, recherche);
+  /* Ajoute dans un tableau les données selon le type */
+  recettes.forEach((recipe) => {
+    switch (type) {
+      case "ingredients":
+        `${recipe.ingredients
+          .map((data) => liste.push(format(`${data.ingredient}`)))
+          .join("")}`;
+        break;
+      case "appareils":
+        liste.push(format(`${recipe.appliance}`));
+        break;
+      case "ustensiles":
+        `${recipe.ustensils
+          .map((data) => liste.push(format(`${data}`)))
+          .join("")}`;
+        break;
+      default:
+        break;
     }
-    /* Insert en éliminant les doublons dans le DOM */
-    document.getElementById("liste-filtre-" + type).innerHTML = "";
-    new Set(liste).forEach((data) => {
-      const nom = effacerEspace(format(data));
-      const elem = document.createElement("li");
-      elem.id = `${type}-${nom}`;
-      elem.dataset.type = type;
-      elem.classList.add("nom-filtre");
-      elem.textContent = data;
-  
-      document
-        .getElementById("liste-filtre-" + type)
-        .insertAdjacentElement("beforeend", elem);
-    });
+  });
+  /* Tri par ordre alphabétique */
+  liste = liste.sort((a, b) => a.localeCompare(b));
+  if (recherche) {
+    liste = liste.filter(
+      (mot) => mot.includes(recherche) || recherche.includes(mot)
+    );
+  } else {
+    console.log("no research");
   }
-  
-  function updateFilter(data) {
-    listeFiltres(data, "ingredients", rechercheIngredient);
-    listeFiltres(data, "appareils", rechercheAppareil);
-    listeFiltres(data, "ustensiles", rechercheUstensils);
-  }
+  /* Insert en éliminant les doublons dans le DOM */
+  document.getElementById("liste-filtre-" + type).innerHTML = "";
+  new Set(liste).forEach((data) => {
+    const nom = effacerEspace(format(data));
+    const elem = document.createElement("li");
+    elem.id = `${type}-${nom}`;
+    elem.dataset.type = type;
+    elem.classList.add("nom-filtre");
+    elem.textContent = data;
 
-  refresh()
+    document
+      .getElementById("liste-filtre-" + type)
+      .insertAdjacentElement("beforeend", elem);
+  });
+}
+
+function updateFilter(data) {
+  listeFiltres(data, "ingredients", rechercheIngredient);
+  listeFiltres(data, "appareils", rechercheAppareil);
+  listeFiltres(data, "ustensiles", rechercheUstensils);
+  makeOptions()
+}
+
+refresh();
